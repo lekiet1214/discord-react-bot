@@ -3,8 +3,6 @@ const dotenv = require('dotenv');
 
 // load env file if it exists
 dotenv.config();
-console.log(process.env.DISCORD_TOKEN);
-console.log(process.env.USER_ID_LIST);
 userIdList = [];
 // load the user id list from the environment
 if (process.env.USER_ID_LIST) {
@@ -26,7 +24,7 @@ client.on(Events.MessageCreate, Message => {
         // const reactionEmoji = message.guild.emojis.cache.find(emoji => emoji.name === 'blobreach');
         try {
 
-            Message.react(Message.guild.emojis.cache.get('1127249890083360889'))
+            Message.react(Message.guild.emojis.cache.get('785955350598910002'))
                 .then(() => console.log('Reacted with thumbs up!'))
                 .catch((err) => console.error('Failed to react with thumbs up.', err));
         }
