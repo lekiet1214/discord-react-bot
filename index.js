@@ -23,7 +23,9 @@ client.on(Events.MessageCreate, Message => {
     // Check if the message is from a user in the user id list
     if (userIdList.includes(Message.author.id)) {
         // React with a thumbs up
+        // const reactionEmoji = message.guild.emojis.cache.find(emoji => emoji.name === 'blobreach');
         try {
+
             Message.react(Message.guild.emojis.cache.get('1127249890083360889'))
                 .then(() => console.log('Reacted with thumbs up!'))
                 .catch((err) => console.error('Failed to react with thumbs up.', err));

@@ -27,4 +27,8 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
-    - run: node index.js
+    - name: run bot
+      env:
+        DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
+        USER_ID_LIST: ${{ secrets.USER_ID_LIST }}
+      run: node index.js
