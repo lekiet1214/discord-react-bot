@@ -4,6 +4,19 @@ const dotenv = require('dotenv');
 // load env file if it exists
 dotenv.config();
 userIdList = [];
+
+if (process.env.DEBUG == 'False') {
+    console.log('Debug mode is off.');
+    console.log = function () { };
+    console.error = function () { };
+    console.warn = function () { };
+    console.info = function () { };
+    console.debug = function () { };
+    console.trace = function () { };
+    
+}
+
+
 // load the user id list from the environment
 if (process.env.USER_ID_LIST) {
     userIdList = process.env.USER_ID_LIST.split(' ');
