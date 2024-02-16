@@ -8,7 +8,7 @@ userIdList = [];
 if (process.env.DEBUG == 'False') {
     console.log('Debug mode is off.');
     console.log = function () { };
-    console.error = function () { };
+    // console.error = function () { };
     console.warn = function () { };
     console.info = function () { };
     console.debug = function () { };
@@ -36,24 +36,19 @@ client.on(Events.MessageCreate, Message => {
         // React with a thumbs up
         // const reactionEmoji = message.guild.emojis.cache.find(emoji => emoji.name === 'blobreach');
         try {
-
             Message.react(Message.guild.emojis.cache.get('785955350598910002'))
                 .then(() => { })
                 .catch((err) => console.error('Failed to react with thumbs up.', err));
         }
         catch (error) {
             console.error('Failed to react with thumbs up.', error);
-            try {
-                // get random emoji from the guild
-                const emoji = Message.guild.emojis.cache.random();
-                Message.react(emoji)
-                    .then(() => { })
-                    .catch((err) => console.error('Failed to react with random emoji.', err));
-            }
-            catch (error) {
-                console.error('Failed to react with random emoji.', error);
-            }
         }
+
+        Promise.all([
+            Message.react('🗿')
+        ])
+            .then(() => { })
+            .catch((err) => console.error('Failed to react with thumbs up and down.', err));
     }
 });
 
