@@ -13,7 +13,7 @@ if (process.env.DEBUG == 'False') {
     console.info = function () { };
     console.debug = function () { };
     console.trace = function () { };
-    
+
 }
 
 
@@ -38,11 +38,21 @@ client.on(Events.MessageCreate, Message => {
         try {
 
             Message.react(Message.guild.emojis.cache.get('785955350598910002'))
-                .then(() => console.log('Reacted with thumbs up!'))
+                .then(() => { })
                 .catch((err) => console.error('Failed to react with thumbs up.', err));
         }
         catch (error) {
             console.error('Failed to react with thumbs up.', error);
+            try {
+                // get random emoji from the guild
+                const emoji = Message.guild.emojis.cache.random();
+                Message.react(emoji)
+                    .then(() => { })
+                    .catch((err) => console.error('Failed to react with random emoji.', err));
+            }
+            catch (error) {
+                console.error('Failed to react with random emoji.', error);
+            }
         }
     }
 });
