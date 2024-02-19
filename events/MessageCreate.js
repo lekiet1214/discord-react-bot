@@ -20,7 +20,10 @@ module.exports = {
             // Search if message is in reactData[userId]
             if (Message.guildId in reactData[Message.author.id]) {
                 // React to message
-                Message.react(reactData[Message.author.id][Message.guildId]);
+                emojis = reactData[Message.author.id][Message.guildId];
+                for (const emoji of emojis) {
+                    Message.react(emoji);
+                }
             }
         }
         return;
