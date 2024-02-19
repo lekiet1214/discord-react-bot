@@ -1,13 +1,16 @@
 {
   "dependencies": {
     "discord.js": "^14.14.1",
-    "dotenv": "^16.4.3"
+    "dotenv": "^16.4.3",
+    "mongodb": "^6.3.0",
+    "mongoose": "^8.1.3"
   },
   "name": "discord-react-bot",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "data": "node mongoDb.js"
   },
   "keywords": [],
   "author": "",
