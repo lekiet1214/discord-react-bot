@@ -9,15 +9,12 @@ module.exports = {
         if (Message.author.bot) return;
 
         // read reactData.json in data folder
-        
         const reactDataPath = path.join(__dirname, '..', 'data', 'reactData.json');
         let reactData = {};
         if (fs.existsSync(reactDataPath)) {
-            console.log('reactData.json exists')
             reactData = JSON.parse(fs.readFileSync(reactDataPath));
         }
 
-        console.log(JSON.stringify(Message, null, 2));
         // Search if userId is in reactData
         if (Message.author.id in reactData) {
             // Search if message is in reactData[userId]
