@@ -1,5 +1,5 @@
 const fs = require('fs');
-const { MongoClient } = require('mongodb');
+const { MongoClient, ServerApiVersion } = require('mongodb');
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -52,7 +52,13 @@ async function uploadJson(pathToJson) {
     try {
         const fileData = fs.readFileSync(pathToJson, 'utf8');
         const jsonData = JSON.parse(fileData);
-        const client = new MongoClient(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+        const client = new MongoClient(process.env.MONGODB_URI, {
+            serverApi: {
+                version: ServerApiVersion.v1,
+                strict: true,
+                deprecationErrors: true,
+            }
+        });
         await client.connect();
         const db = client.db();
         const collection = db.collection('json_collection');
@@ -69,3 +75,16 @@ module.exports = {
     updateJSONWithMongoData,
     uploadJson,
 };
+
+const args = process.argv.slice(2);
+switch (args[0]) {
+    case "update":
+        updateJSONWithMongoData(args[1]);
+        break;
+    case "upload":
+        uploadJson(args[1]);
+        break;
+    default:
+        console.error("Invalid command. Use 'update' or 'upload'");
+        break;
+}
