@@ -24,15 +24,13 @@ async function registerGuildCommands(command, guildId) {
 }
 
 async function registerGlobalCommands(command) {
-	commandToSend = [];
-	commandToSend.push(command);
 	try {
-		console.log(`Started refreshing command: ${command.name}`);
+		console.log(`Started refreshing ${commands.length} application (/) commands.`);
 		const data = await rest.put(
 			Routes.applicationCommands(process.env.CLIENT_ID),
-			{ body: commandToSend },
+			{ body: command },
 		);
-		console.log(`Successfully refreshed command: ${command.name}`);
+		console.log(`Successfully reloaded ${data.length} application (/) commands.`);
 	} catch (error) {
 		console.error(error);
 	}
@@ -64,17 +62,19 @@ for (const folder of commandFolders) {
 	}
 }
 
+globalCommands = [];
+
 (async () => {
 	for (const command of commands) {
-	if (commandsJson[command.name][0] == "all") {
-		console.log(`Registering global command: ${command.name}`);
-		await registerGlobalCommands(command);
-		// wait 1 second to avoid rate limit
-		await new Promise(resolve => setTimeout(resolve, 1000));
-	} else {
-		for (const guildId of commandsJson[command.name]) {
-			console.log(`Registering guild command: ${command.name} for guild: ${guildId}`);
-			await registerGuildCommands(command, guildId);
+		if (commandsJson[command.name][0] == "all") {
+			globalCommands.push(command);
+		} else {
+			for (const guildId of commandsJson[command.name]) {
+				console.log(`Registering guild command: ${command.name} for guild: ${guildId}`);
+				await registerGuildCommands(command, guildId);
+			}
 		}
 	}
-}})();
+	await registerGlobalCommands(globalCommands);
+})();
+
