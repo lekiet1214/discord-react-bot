@@ -5,6 +5,8 @@ module.exports = {
         .setName('ping')
         .setDescription('Replies with Pong!'),
     async execute(interaction) {
-        await interaction.reply({ content: 'Pong!', ephemeral: true});
+        // Caculate bot's ping
+        const ping = Date.now() - interaction.createdTimestamp;
+        await interaction.reply({ content: `Pong! Bot's ping is ${ping}ms`, ephemeral: true});
     }
 };
