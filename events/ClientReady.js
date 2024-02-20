@@ -20,7 +20,7 @@ module.exports = {
         uploadJson(guildIdPath, 'guildId');
 
         // Set bot status
-        readyClient.user.serStatus('idle');
+        readyClient.user.setStatus('idle');
         readyClient.user.setActivity('your mom!', { type: ActivityType.PLAYING });
     }
 };
