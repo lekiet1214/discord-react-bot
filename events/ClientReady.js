@@ -1,4 +1,6 @@
 const { Events } = require('discord.js');
+const fs = require('fs');
+const path = require('path');
 
 if (process.env.userIdList) {
     userIdList = process.env.userIdList.split(',');
@@ -9,5 +11,9 @@ module.exports = {
     once: true,
     execute(readyClient) {
         console.log(`Ready lol!`);
+        const Guilds = readyClient.guilds.cache.map(guild => guild.id);
+        // Write guilds to guildid.json
+        const guildIdPath = path.join(__dirname, '../data/guildId.json');
+        fs.writeFileSync(guildIdPath, JSON.stringify(Guilds, null, 2));
     }
 };
