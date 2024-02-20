@@ -11,7 +11,14 @@ module.exports = {
     async execute(interaction) {
         const text = interaction.options.getString('text');
         // Send the text to the channel without a reply
+        await interaction.deferReply({ ephemeral: true })
+            .then(() => {
+                interaction.followUp("I'm saying: " + text + " in the channel.")
+            }
+            )
+            .catch(console.error);
+
         await interaction.channel.send(text);
-        
+
     }
 };
