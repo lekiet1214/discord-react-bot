@@ -9,6 +9,9 @@ module.exports = {
                 .setDescription('The text to say')
                 .setRequired(true)),
     async execute(interaction) {
+        if (interaction.user.id !== process.env.OWNER_ID) {
+            return interaction.reply({ content: 'You are not my owner. Fuck off!!', ephemeral: true });
+        }
         const text = interaction.options.getString('text');
         // Send the text to the channel without a reply
         await interaction.deferReply({ ephemeral: true })
