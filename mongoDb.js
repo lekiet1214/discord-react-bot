@@ -75,16 +75,3 @@ module.exports = {
     updateJSONWithMongoData,
     uploadJson,
 };
-
-const args = process.argv.slice(2);
-switch (args[0]) {
-    case "update":
-        updateJSONWithMongoData(args[1]);
-        break;
-    case "upload":
-        uploadJson(args[1]);
-        break;
-    default:
-        console.error("Invalid command. Use 'update' or 'upload'");
-        break;
-}
