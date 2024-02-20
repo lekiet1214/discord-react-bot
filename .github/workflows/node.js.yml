@@ -39,4 +39,5 @@ jobs:
           MONGODB_URI: ${{ secrets.MONGODB_URI }}
           CLIENT_ID: ${{ secrets.CLIENT_ID }}
           DEBUG: "False"
+          OWNER_ID: ${{ secrets.OWNER_ID }}
         run: npm run start
