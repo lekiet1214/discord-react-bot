@@ -33,7 +33,7 @@ module.exports = {
         fs.writeFileSync(filePath, JSON.stringify(jsonData, null, 2), 'utf8');
         // Upload the file to MongoDB
         uploadJson(filePath, 'reactData');
-        await interaction.reply('Reaction added to your list.');
+        await interaction.reply({ content: `Added ${emoji} to your list of reactions`, ephemeral: true });
 
     }
 };

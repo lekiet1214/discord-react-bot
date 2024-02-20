@@ -32,7 +32,7 @@ module.exports = {
         // Upload the file to MongoDB
         uploadJson(filePath, 'reactData');
         
-        await interaction.reply('Reaction added to your list.');
+        await interaction.reply({ content: `Removed ${emoji} from your list of reactions`, ephemeral: true});
 
     }
 };
