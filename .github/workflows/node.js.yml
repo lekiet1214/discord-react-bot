@@ -36,6 +36,5 @@ jobs:
       - name: run bot
         env:
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
-          USER_ID_LIST: ${{ secrets.USER_ID_LIST }}
           DEBUG: "False"
-        run: node index.js
+        run: node start
