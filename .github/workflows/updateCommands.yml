@@ -4,13 +4,9 @@
 name: Node.js CI
 
 on:
-  push:
-    branches: ["main"]
-  pull_request:
-    branches: ["main"]
   schedule:
-    # every six hours
-    - cron: "0 */6 * * *"
+    # everydays at 00:00
+    - cron: "0 0 * * *"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
