@@ -5,7 +5,7 @@ dotenv.config();
 
 async function getJSONFromMongoDB(collectionName) {
     try {
-        const client = new MongoClient(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+        const client = new MongoClient(process.env.MONGODB_URI, { useUnifiedTopology: true });
         await client.connect();
         const db = client.db();
         const collection = db.collection(collectionName);
@@ -46,7 +46,7 @@ async function uploadJson(pathToJson, collectionName) {
     try {
         const fileData = fs.readFileSync(pathToJson, 'utf8');
         const jsonData = JSON.parse(fileData);
-        const client = new MongoClient(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+        const client = new MongoClient(process.env.MONGODB_URI, { useUnifiedTopology: true });
         await client.connect();
         const db = client.db();
         const collection = db.collection(collectionName);
