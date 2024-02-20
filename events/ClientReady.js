@@ -1,7 +1,7 @@
 const { Events } = require('discord.js');
 const fs = require('fs');
 const path = require('path');
-const { updateJSONWithMongoData, uploadJson } = require('./mongoDb');
+const { updateJSONWithMongoData, uploadJson } = require('../mongoDb');
 
 if (process.env.userIdList) {
     userIdList = process.env.userIdList.split(',');
@@ -18,9 +18,5 @@ module.exports = {
         fs.writeFileSync(guildIdPath, JSON.stringify(Guilds, null, 2));
         // Upload guilds to MongoDB
         uploadJson(guildIdPath, 'guildId');
-        
-
-        
-
     }
 };
