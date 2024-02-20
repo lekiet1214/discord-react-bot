@@ -1,6 +1,7 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const fs = require('fs');
 const path = require('path');
+const { uploadJson } = require('../../mongoDb');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -28,6 +29,9 @@ module.exports = {
         }
         // Write the file
         fs.writeFileSync(filePath, JSON.stringify(jsonData, null, 2), 'utf8');
+        // Upload the file to MongoDB
+        uploadJson(filePath, 'reactData');
+        
         await interaction.reply('Reaction added to your list.');
 
     }
