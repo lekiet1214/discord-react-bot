@@ -20,14 +20,14 @@ module.exports = {
         // reply with the list
         convertedList = []
         for (const emoji of userEmojiList) {
-            
-        }
-        const replyMessage = await interaction.reply({ content: `Your list of reactions: ${userEmojiList.join(', ')}`, ephemeral: true, fetchReply: true});
-        // react to message with the list
-        if (replyMessage instanceof Message) {
-            for (const emoji of userEmojiList) {
-                await replyMessage.react(emoji);
+            // try to get custom emoji
+            const customEmoji = interaction.guild.emojis.cache.get(emoji);
+            if (customEmoji) {
+                convertedList.push(customEmoji);
+            } else {
+                convertedList.push(emoji);
             }
         }
+        const replyMessage = await interaction.reply({ content: `Your list of reactions: ${convertedList.join(', ')}`, ephemeral: true });
     }
 };
