@@ -9,7 +9,7 @@ const owners = OWNER_ID.split(',');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('commands')
+        .setName('commandsedit')
         .setDescription('modiify commands')
         .addBooleanOption(option =>
             option.setName('add')
