@@ -22,7 +22,11 @@ module.exports = {
                 // React to message
                 emojis = reactData[Message.author.id][Message.guildId];
                 for (const emoji of emojis) {
-                    Message.react(emoji);
+                    try {
+                        Message.react(emoji);
+                    } catch (error) {
+                        throw error;
+                    }
                 }
             }
         }
