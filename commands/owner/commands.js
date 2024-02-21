@@ -20,7 +20,7 @@ module.exports = {
                 .setDescription('The name of the command')
                 .setRequired(true))
         .addStringOption(option =>
-            option.setName('GuildId')
+            option.setName('guildid')
                 .setDescription('The guild id')
                 .setRequired(true)),
     async execute(interaction) {
@@ -28,7 +28,7 @@ module.exports = {
             const commandsPath = path.join(__dirname, '/../../data/commands.json');
             const fileData = fs.readFileSync(commandsPath, 'utf8');
             const jsonData = JSON.parse(fileData);
-            const guildId = interaction.options.getString('GuildId');
+            const guildId = interaction.options.getString('guildid');
             const commandName = interaction.options.getString('name');
             const add = interaction.options.getBoolean('add');
             const guildIdPath = path.join(__dirname, `/../../data/guildId.json`);
