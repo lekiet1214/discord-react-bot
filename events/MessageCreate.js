@@ -25,7 +25,8 @@ module.exports = {
                     try {
                         Message.react(emoji);
                     } catch (error) {
-                        throw error;
+                        // do nothing
+                        
                     }
                 }
             }
