@@ -6,7 +6,6 @@ const { uploadJson } = require('../../mongoDb');
 const { OWNER_ID } = process.env;
 const owners = OWNER_ID.split(',');
 
-
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('commandsedit')
@@ -34,10 +33,12 @@ module.exports = {
             const guildIdPath = path.join(__dirname, `/../../data/guildId.json`);
             const guildIdData = fs.readFileSync(guildIdPath, 'utf8');
             const guildIdJson = JSON.parse(guildIdData);
-            if (!(guildId in guildIdJson)) {
+            
+            if (!(guildId in Object.keys(guildIdJson))) {
                 await interaction.reply({ content: `Guild not found`, ephemeral: true });
                 return;
             }
+
             if (!(commandName in jsonData)) {
                 await interaction.reply({ content: `Command not found`, ephemeral: true });
                 return;

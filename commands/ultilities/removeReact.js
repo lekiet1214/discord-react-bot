@@ -10,7 +10,7 @@ module.exports = {
         .addStringOption(option =>
             option.setName('reaction')
                 .setDescription('The reaction to add')
-                .setRequired(false)),
+                .setRequired(true)),
     async execute(interaction) {
         // Get emoji from command
         const emoji = interaction.options.getString('reaction');

@@ -64,17 +64,46 @@ for (const folder of commandFolders) {
 
 globalCommands = [];
 
-(async () => {
-	for (const command of commands) {
-		if (commandsJson[command.name][0] == "all") {
-			globalCommands.push(command);
-		} else {
-			for (const guildId of commandsJson[command.name]) {
-				console.log(`Registering guild command: ${command.name} for guild: ${guildId}`);
-				await registerGuildCommands(command, guildId);
+
+function deployAll() {
+	(async () => {
+		for (const command of commands) {
+			if (commandsJson[command.name][0] == "all") {
+				globalCommands.push(command);
+			} else {
+				for (const guildId of commandsJson[command.name]) {
+					console.log(`Registering guild command: ${command.name} for guild: ${guildId}`);
+					await registerGuildCommands(command, guildId);
+				}
 			}
 		}
-	}
-	await registerGlobalCommands(globalCommands);
-})();
+		await registerGlobalCommands(globalCommands);
+	})();
 
+}
+
+function deploy(commandToDeploy) {
+	(async () => {
+		if (commandsJson[commandToDeploy][0] == "all") {
+			await registerGlobalCommands(commandToDeploy);
+		} else {
+			// get command from commands array
+			const command = commands.find(cmd => cmd.name === commandToDeploy);
+			if (command) {
+				for (const guildId of commandsJson[commandToDeploy]) {
+					console.log(`Registering guild command: ${command.name} for guild: ${guildId}`);
+					await registerGuildCommands(command, guildId);
+				}
+			} else {
+				console.log(`Command ${commandToDeploy} not found`);
+			}
+		}
+	})();
+}
+
+const args = process.argv.slice(2);
+if (args.length == 0) {
+	deployAll();
+} else {
+	deploy(args[0]);
+}
