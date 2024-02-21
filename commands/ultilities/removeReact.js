@@ -27,6 +27,10 @@ module.exports = {
             // remove the emoji from the list
             userEmojiList.splice(userEmojiList.indexOf(emoji), 1);
         }
+        else {
+            await interaction.reply({ content: `You don't have ${emoji} in your list of reactions`, ephemeral: true});
+            return;
+        }
         // Write the file
         fs.writeFileSync(filePath, JSON.stringify(jsonData, null, 2), 'utf8');
         // Upload the file to MongoDB
