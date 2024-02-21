@@ -1,4 +1,9 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
+const dotenv = require('dotenv');
+dotenv.config();
+
+const { OWNER_ID } = process.env;
+const owners = OWNER_ID.split(',');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -9,7 +14,7 @@ module.exports = {
                 .setDescription('The text to say')
                 .setRequired(true)),
     async execute(interaction) {
-        if (interaction.user.id !== process.env.OWNER_ID) {
+        if (!(interaction.user.id in owners)) {
             return interaction.reply({ content: 'You are not my owner. Fuck off!!', ephemeral: true });
         }
         const text = interaction.options.getString('text');
