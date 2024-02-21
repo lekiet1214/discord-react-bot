@@ -2,6 +2,7 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 const fs = require('fs');
 const path = require('path');
 const { uploadJson } = require('../../mongoDb');
+const { Message } = require('discord.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -17,10 +18,12 @@ module.exports = {
         // Get user's current emoji list
         const userEmojiList = jsonData[interaction.user.id][interaction.guild.id];
         // reply with the list
-        await interaction.reply({ content: `Your list of reactions: ${userEmojiList.join(', ')}`, ephemeral: true });
+        const replyMessage = await interaction.reply({ content: `Your list of reactions: ${userEmojiList.join(', ')}`, ephemeral: true });
         // react to message with the list
-        for (const emoji of userEmojiList) {
-            await interaction.message.react(emoji);
+        if (replyMessage instanceof Message) {
+            for (const emoji of userEmojiList) {
+                await replyMessage.react(emoji);
+            }
         }
     }
 };
