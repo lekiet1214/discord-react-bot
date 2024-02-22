@@ -131,3 +131,6 @@ dist
 
 # credentails
 dotenv
+
+# runtime data
+data/
