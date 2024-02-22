@@ -15,6 +15,11 @@ module.exports = {
         const Guilds = readyClient.guilds.cache.map(guild => guild.id);
         // Write guilds to guildid.json
         const guildIdPath = path.join(__dirname, '../data/guildId.json');
+        // Create guildId.json if it doesn't exist
+        if (!fs.existsSync(guildIdPath)) {
+            fs.writeFileSync(guildIdPath, JSON.stringify([], null, 2));
+        }
+        // Write guilds to guildId.json        
         fs.writeFileSync(guildIdPath, JSON.stringify(Guilds, null, 2));
         // Upload guilds to MongoDB
         uploadJson(guildIdPath, 'guildId');

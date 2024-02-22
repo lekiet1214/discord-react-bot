@@ -20,6 +20,16 @@ async function getJSONFromMongoDB(collectionName) {
 
 function updateJSON(pathToJson, newData) {
     try {
+        // create the data directory if it doesn't exist
+        const dataDir = pathToJson.substring(0, pathToJson.lastIndexOf('/'));
+        if (!fs.existsSync(dataDir)) {
+            fs.mkdirSync(dataDir, { recursive: true });
+        }
+        // create the JSON file if it doesn't exist
+        if (!fs.existsSync(pathToJson)) { 
+            fs.writeFileSync(pathToJson, JSON.stringify([], null, 2)); 
+        }
+        // Write the new data to the JSON file
         fs.writeFileSync(pathToJson, JSON.stringify(newData, null, 2), 'utf8');
         console.debug(`JSON file '${pathToJson}' updated successfully`);
     } catch (error) {
