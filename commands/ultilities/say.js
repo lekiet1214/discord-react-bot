@@ -14,7 +14,7 @@ module.exports = {
                 .setDescription('The text to say')
                 .setRequired(true)),
     async execute(interaction) {
-        if (!(interaction.user.id in owners)) {
+        if (!(owners.includes(interaction.user.id))) {
             return interaction.reply({ content: 'You are not my owner. Fuck off!!', ephemeral: true });
         }
         const text = interaction.options.getString('text');
