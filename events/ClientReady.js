@@ -15,6 +15,11 @@ module.exports = {
         const Guilds = readyClient.guilds.cache.map(guild => guild.id);
         // Write guilds to guildid.json
         const guildIdPath = path.join(__dirname, '../data/guildId.json');
+        // create the data directory if it doesn't exist
+        const dataDir = guildIdPath.substring(0, guildIdPath.lastIndexOf('/'));
+        if (!fs.existsSync(dataDir)) {
+            fs.mkdirSync(dataDir, { recursive: true });
+        }
         // Create guildId.json if it doesn't exist
         if (!fs.existsSync(guildIdPath)) {
             fs.writeFileSync(guildIdPath, JSON.stringify([], null, 2));
