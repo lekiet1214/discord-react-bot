@@ -28,7 +28,7 @@ module.exports = {
         // Check if the emoji is already in the list
         if (emoji == 'all') {
             userEmojiList = [];
-            return await interaction.reply({ content: `Removed all reactions from your list`, ephemeral: true });
+            await interaction.reply({ content: `Removed all reactions from your list`, ephemeral: true });
         }
         else {
             if (userEmojiList.includes(emoji)) {
