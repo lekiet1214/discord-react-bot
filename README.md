@@ -1,10 +1,10 @@
 # DISCORD REACT BOT
 
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE) [![Node.js CI](https://github.com/lekiet1214/discord-react-bot/actions/workflows/node.js.yml/badge.svg)](https://github.com/lekiet1214/discord-react-bot/actions/workflows/node.js.yml)
+![GitHub License](https://img.shields.io/github/license/lekiet1214/discord-react-bot)  [![Node.js CI](https://github.com/lekiet1214/discord-react-bot/actions/workflows/node.js.yml/badge.svg)](https://github.com/lekiet1214/discord-react-bot/actions/workflows/node.js.yml)
 
 ## Description
 
-A brief description of your project.
+A discord bot built with discord.js and MongoDB.
 
 ## Table of Contents
 
