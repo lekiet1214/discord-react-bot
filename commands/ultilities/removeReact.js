@@ -28,7 +28,11 @@ module.exports = {
         // Check if the emoji is already in the list
         if (emoji == 'all') {
             userEmojiList = [];
-            await interaction.reply({ content: `Removed all reactions from your list`, ephemeral: true });
+            // Write the file
+            fs.writeFileSync(filePath, JSON.stringify(jsonData, null, 2), 'utf8');
+            // Upload the file to MongoDB
+            uploadJson(filePath, 'reactData');
+            return await interaction.reply({ content: `Removed all reactions from your list`, ephemeral: true });
         }
         else {
             if (userEmojiList.includes(emoji)) {
