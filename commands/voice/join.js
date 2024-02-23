@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { joinvoicechannel } = require('@discordjs/voice');
+const { joinVoiceChannel } = require('@discordjs/voice');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -13,7 +13,7 @@ module.exports = {
         const channelId = interaction.member.voice.channel.id;
         // join the channel
         try {
-            const connection = joinvoicechannel({
+            const connection = joinVoiceChannel ({
                 channelId: channelId,
                 guildId: interaction.guild.id,
                 adapterCreator: interaction.guild.voiceAdapterCreator
