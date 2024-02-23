@@ -15,6 +15,8 @@ module.exports = {
         const fileData = fs.readFileSync(filePath, 'utf8');
         // Parse the file
         const jsonData = JSON.parse(fileData);
+        // Get user's current emoji list
+        const userEmojiList = jsonData[interaction.user.id][interaction.guild.id];
         // reply with the list
         convertedList = []
         for (const emoji of userEmojiList) {
