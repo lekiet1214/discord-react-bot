@@ -8,7 +8,6 @@ module.exports = {
     name: Events.VoiceStateUpdate,
     once: false,
     async execute(oldState, newState) {
-        console.log(oldState.id)
         if (oldState.id == process.env.CLIENT_ID) {
             voiceJson = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../data/voice.json'), 'utf8'));
             if (!(newState.channelId === null)) {

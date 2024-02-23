@@ -31,9 +31,7 @@ module.exports = {
         const guildListPath = path.join(__dirname, '../data/guildId.json');
         const guildList = JSON.parse(fs.readFileSync(guildListPath, 'utf8'));
         for (const guild of guildList) {
-            console.log(guild);
             if (voiceData[guild] !== undefined) {
-                console.log(voiceData[guild]);
                 try {
                     // get the guild
                     vGuild = readyClient.guilds.cache.get(guild);
