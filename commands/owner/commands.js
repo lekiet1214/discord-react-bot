@@ -34,26 +34,28 @@ module.exports = {
             const guildIdData = fs.readFileSync(guildIdPath, 'utf8');
             const guildIdJson = JSON.parse(guildIdData);
             
-            if (!(guildId in Object.keys(guildIdJson))) {
+            if (!(guildId in Object.keys(guildIdJson)) && guildId !== 'all') {
                 await interaction.reply({ content: `Guild not found`, ephemeral: true });
                 return;
             }
 
-            if (!(commandName in jsonData)) {
-                await interaction.reply({ content: `Command not found`, ephemeral: true });
-                return;
-            }
             if (add) {
+                if (jsonData[commandName] === undefined) jsonData[commandName] = [];
                 if (jsonData[commandName].includes(guildId)) {
                     await interaction.reply({ content: `Command already exists`, ephemeral: true });
                     return;
                 }
+                
                 jsonData[commandName].push(guildId);
                 fs.writeFileSync(commandsPath, JSON.stringify(jsonData, null, 2), 'utf8');
                 uploadJson(commandsPath, 'commands');
                 await interaction.reply({ content: `Command added`, ephemeral: true });
             }
             else {
+                if (!(commandName in jsonData)) {
+                    await interaction.reply({ content: `Command not found`, ephemeral: true });
+                    return;
+                }
                 if (!jsonData[commandName].includes(guildId)) {
                     await interaction.reply({ content: `Command does not exist`, ephemeral: true });
                     return;
