@@ -37,6 +37,14 @@ jobs:
         env:
           MONGODB_URI: ${{ secrets.MONGODB_URI }}
         run: npm run preparedata
+      - name: Clean commands
+        env:
+          DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+          CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          DEBUG: "False"
+          OWNER_ID: ${{ secrets.OWNER_ID }}
+        run: timeout 3600 npm run delcommand || code=$?; if [[ $code -ne 124 && $code -ne 0 ]]; then exit $code; fi
       - name: Push commands
         env:
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
@@ -44,6 +52,4 @@ jobs:
           CLIENT_ID: ${{ secrets.CLIENT_ID }}
           DEBUG: "False"
           OWNER_ID: ${{ secrets.OWNER_ID }}
-        run: |
-            timeout 3600 npm run delcommand || code=$?; if [[ $code -ne 124 && $code -ne 0 ]]; then exit $code; fi \
-            timeout 3600 npm run regcommand || code=$?; if [[ $code -ne 124 && $code -ne 0 ]]; then exit $code; fi
+        run: timeout 3600 npm run regcommand || code=$?; if [[ $code -ne 124 && $code -ne 0 ]]; then exit $code; fi
