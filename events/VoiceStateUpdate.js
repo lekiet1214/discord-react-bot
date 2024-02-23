@@ -1,10 +1,32 @@
 const { Collection, Events, Client } = require('discord.js');
+const fs = require('fs');
+const path = require('path');
+const dotenv = require('dotenv');
+dotenv.config();
 
 module.exports = {
     name: Events.VoiceStateUpdate,
     once: false,
     async execute(oldState, newState) {
-        if (oldState === newState) return; // This dump af, but failsafe
-        
+        console.log(oldState.id)
+        if (oldState.id == process.env.CLIENT_ID) {
+            voiceJson = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../data/voice.json'), 'utf8'));
+            if (!(newState.channelId === null)) {
+                // log guildId and channelId to json                
+                voiceJson[newState.guild.id] = newState.channelId;
+                fs.writeFileSync(path.resolve(__dirname, '../data/voice.json'), JSON.stringify(voiceJson, null, 2));
+            }
+            else {
+                if (newState.channelId === null) {
+                    // remove guildId and channelId from json
+                    try {
+                        delete voiceJson[oldState.guild.id];
+                        fs.writeFileSync(path.resolve(__dirname, '../data/voice.json'), JSON.stringify(voiceJson, null, 2));
+                    } catch (error) {
+                        console.error(error);
+                    }
+                }
+            }
+        }
     }
 };
