@@ -77,7 +77,9 @@ if (args.length > 0) {
         updateJSONWithMongoData('data/reactData.json', 'reactData');
         updateJSONWithMongoData('data/commands.json', 'commands');
         updateJSONWithMongoData('data/guildId.json', 'guildId');
+        updateJSONWithMongoData('data/voice.json', 'voice');
     } else if (args[0] === 'upload') {
+        uploadJson('data/voice.json', 'voice');
         uploadJson('data/reactData.json', 'reactData');
         uploadJson('data/commands.json', 'commands');
         uploadJson('data/guildId.json', 'guildId');

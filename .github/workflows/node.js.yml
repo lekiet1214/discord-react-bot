@@ -37,6 +37,10 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
       - run: npm ci
+      - name: Prepare data
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+        run: npm run preparedataP
       - name: run bot
         env:
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}

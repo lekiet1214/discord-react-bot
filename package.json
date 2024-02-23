@@ -19,7 +19,8 @@
         "regcommand": "node deploy-commands.js",
         "bot": "node index.js",
         "delcommand": "node delete-commands.js",
-        "ver": "npx auto-version "
+        "ver": "npx auto-version ",
+        "preparedata": "node mongoDb.js update"
     },
     "keywords": [],
     "author": "",
