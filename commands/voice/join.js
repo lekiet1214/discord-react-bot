@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { joinVoiceChannel } = require('@discordjs/voice');
+const { joinVoiceChannel, VoiceConnectionStatus, entersState } = require('@discordjs/voice');
+const { connection } = require('mongoose');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -13,7 +14,7 @@ module.exports = {
         const channelId = interaction.member.voice.channel.id;
         // join the channel
         try {
-            const connection = joinVoiceChannel ({
+            const connection = joinVoiceChannel({
                 channelId: channelId,
                 guildId: interaction.guild.id,
                 adapterCreator: interaction.guild.voiceAdapterCreator
@@ -22,6 +23,19 @@ module.exports = {
             console.error(error);
             return await interaction.reply({ content: 'Error occurred while joining the voice channel', ephemeral: true });
         }
+        connection.on(VoiceConnectionStatus.Disconnected, async (oldState, newState) => {
+            try {
+                await Promise.race([
+                    entersState(connection, VoiceConnectionStatus.Signalling, 5_000),
+                    entersState(connection, VoiceConnectionStatus.Connecting, 5_000),
+                ]);
+                // Seems to be reconnecting to a new channel - ignore disconnect
+            } catch (error) {
+                // Seems to be a real disconnect which SHOULDN'T be recovered from
+
+                connection.destroy();
+            }
+        });
         return await interaction.reply({ content: `Joined the voice channel <#${channelId}>`, ephemeral: true });
     }
 };
