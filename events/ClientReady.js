@@ -1,5 +1,5 @@
 const { ActivityType, Events } = require('discord.js');
-const fs = require('fs').promises; // Use fs.promises for promise-based file operations
+const fs = require('fs'); // Use fs.promises for promise-based file operations
 const path = require('path');
 const { uploadJson } = require('../mongoDb');
 const { joinVoiceChannel } = require('@discordjs/voice');
@@ -13,54 +13,23 @@ module.exports = {
         // Write guilds to guildid.json
         const guildIdPath = path.join(__dirname, '../data/guildId.json');
 
-        // Open the file asynchronously
-        let fileHandle;
-        try {
-            await fs.access(guildIdPath);
-        } catch (err) {
-            // Handle errors, if any
-            if (err.code === 'ENOENT') {
-                // Create the file if it doesn't exist
-                console.log("Creating guildId.json...");
-                await fs.writeFile(guildIdPath, '{}');
-            } else {
-                console.error("Error:", err);
-                return; // Stop execution if there's an error
-            }
-        }
-
-        fs.writeFile(guildIdPath, JSON.stringify(Guilds, null, 2), 'utf8');
-
-        // Upload guilds to MongoDB
+        // Write guilds to guildid.json
+        fs.writeFileSync(guildIdPath, JSON.stringify(Guilds, null, 2));
         uploadJson(guildIdPath, 'guildId');
+        // Set activity
+        readyClient.user.setActivity('your mom', { type: ActivityType.PLAYING });
+        // Set status
+        readyClient.user.setStatus('odle');
 
-        // Set bot status
-        readyClient.user.setStatus('idle');
-        readyClient.user.setActivity('your mom!', { type: ActivityType.PLAYING });
-
-        // Read voice.json file
-        const voicePath = path.join(__dirname, '../data/voice.json');
-        let voiceData;
-        try {
-            // Check if voice.json exists
-            await fs.access(voicePath);
-            voiceData = JSON.parse(await fs.readFile(voicePath, 'utf8'));
-        } catch (err) {
-            // If voice.json doesn't exist, create an empty one
-            if (err.code === 'ENOENT') {
-                console.log("Creating voice.json...");
-                await fs.writeFile(voicePath, '{}');
-                voiceData = {};
-
-            } else {
-                console.error("Error:", err);
-                return; // Stop execution if there's an error
-            }
+        const voiceData = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../data/voice.json'), 'utf8'));
+        if (voiceData === undefined) {
+            console.error('Voice data not found');
+            return;
         }
 
         // Join voice channel
         const guildListPath = path.join(__dirname, '../data/guildId.json');
-        const guildList = JSON.parse(await fs.readFile(guildListPath, 'utf8'));
+        const guildList = JSON.parse(fs.readFileSync(guildListPath, 'utf8'));
         for (const guild of guildList) {
             console.log(guild);
             if (voiceData[guild] !== undefined) {
