@@ -17,6 +17,9 @@ module.exports = {
         const jsonData = JSON.parse(fileData);
         // Get user's current emoji list
         const userEmojiList = jsonData[interaction.user.id][interaction.guild.id];
+        if (!userEmojiList) {
+            return await interaction.reply({ content: `You don't have any reactions in your list`, ephemeral: true });
+        }
         // reply with the list
         convertedList = []
         for (const emoji of userEmojiList) {
