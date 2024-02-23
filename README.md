@@ -1,6 +1,6 @@
 # DISCORD REACT BOT
 
-![GitHub License](https://img.shields.io/github/license/lekiet1214/discord-react-bot?logo=gnuprivacyguard)  [![Node.js CI](https://github.com/lekiet1214/discord-react-bot/actions/workflows/node.js.yml/badge.svg)](https://github.com/lekiet1214/discord-react-bot/actions/workflows/node.js.yml) ![GitHub package.json version](https://img.shields.io/github/package-json/v/lekiet1214/discord-react-bot?logo=npm)
+![GitHub License](https://img.shields.io/github/license/lekiet1214/discord-react-bot?logo=gnuprivacyguard)  [![Node.js CI](https://github.com/lekiet1214/discord-react-bot/actions/workflows/node.js.yml/badge.svg)](https://github.com/lekiet1214/discord-react-bot/actions/workflows/node.js.yml) ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/lekiet1214/discord-react-bot/deploy.commands.yml?label=Deploy%20command) ![GitHub package.json version](https://img.shields.io/github/package-json/v/lekiet1214/discord-react-bot?logo=npm) 
 
 
 ## Description
