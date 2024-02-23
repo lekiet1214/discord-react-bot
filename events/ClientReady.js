@@ -22,7 +22,7 @@ module.exports = {
             if (err.code === 'ENOENT') {
                 // Create the file if it doesn't exist
                 console.log("Creating guildId.json...");
-                await fs.writeFile(guildIdPath, '[]');
+                await fs.writeFile(guildIdPath, '{}');
             } else {
                 console.error("Error:", err);
                 return; // Stop execution if there's an error
