@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const dotenv = require('dotenv');
 dotenv.config();
+const { uploadJson } = require('../mongoDb');
 
 module.exports = {
     name: Events.VoiceStateUpdate,
@@ -14,6 +15,7 @@ module.exports = {
                 // log guildId and channelId to json                
                 voiceJson[newState.guild.id] = newState.channelId;
                 fs.writeFileSync(path.resolve(__dirname, '../data/voice.json'), JSON.stringify(voiceJson, null, 2));
+                uploadJson(path.resolve(__dirname, '../data/voice.json'), 'voice');
             }
             else {
                 if (newState.channelId === null) {
@@ -21,6 +23,7 @@ module.exports = {
                     try {
                         delete voiceJson[oldState.guild.id];
                         fs.writeFileSync(path.resolve(__dirname, '../data/voice.json'), JSON.stringify(voiceJson, null, 2));
+                        uploadJson(path.resolve(__dirname, '../data/voice.json'), 'voice');
                     } catch (error) {
                         console.error(error);
                     }
