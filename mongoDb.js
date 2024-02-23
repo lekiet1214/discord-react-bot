@@ -31,7 +31,6 @@ function updateJSON(pathToJson, newData) {
         }
         // Write the new data to the JSON file
         fs.writeFileSync(pathToJson, JSON.stringify(newData, null, 2), 'utf8');
-        console.debug(`JSON file '${pathToJson}' updated successfully`);
     } catch (error) {
         console.error(`Error updating JSON file '${pathToJson}':`, error);
         throw error;
@@ -44,11 +43,10 @@ async function updateJSONWithMongoData(pathToJson, collectionName) {
         if (mongoData) {
             updateJSON(pathToJson, mongoData);
         } else {
-            console.debug(`No JSON data found in MongoDB for collection '${collectionName}'`);
+            console.error(`No JSON data found in MongoDB for collection '${collectionName}'`);
         }
     } catch (error) {
         console.error(`Error updating JSON file '${pathToJson}' with MongoDB data:`, error);
-        throw error;
     }
 }
 
@@ -61,11 +59,9 @@ async function uploadJson(pathToJson, collectionName) {
         const db = client.db();
         const collection = db.collection(collectionName);
         await collection.replaceOne({}, { data: jsonData }, { upsert: true });
-        console.debug(`JSON file '${pathToJson}' uploaded successfully to MongoDB`);
         client.close();
     } catch (error) {
         console.error(`Error uploading JSON file '${pathToJson}' to MongoDB:`, error);
-        throw error;
     }
 }
 
