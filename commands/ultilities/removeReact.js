@@ -24,7 +24,7 @@ module.exports = {
         // Parse the file
         const jsonData = JSON.parse(fileData);
         // Get user's current emoji list
-        const userEmojiList = jsonData[interaction.user.id][interaction.guild.id];
+        userEmojiList = jsonData[interaction.user.id][interaction.guild.id];
         // Check if the emoji is already in the list
         if (emoji == 'all') {
             userEmojiList = [];
