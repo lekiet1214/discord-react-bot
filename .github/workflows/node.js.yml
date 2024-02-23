@@ -40,7 +40,7 @@ jobs:
       - name: Prepare data
         env:
           MONGODB_URI: ${{ secrets.MONGODB_URI }}
-        run: npm run preparedataP
+        run: npm run preparedata
       - name: run bot
         env:
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
