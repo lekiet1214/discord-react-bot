@@ -16,18 +16,20 @@ module.exports = {
         // Open the file asynchronously
         let fileHandle;
         try {
-            fileHandle = await fs.open(guildIdPath, 'wx');
-            // Write to the file
-            await fs.writeFile(guildIdPath, JSON.stringify(Guilds, null, 2));
+            await fs.access(guildIdPath);
         } catch (err) {
             // Handle errors, if any
-            console.error("Error:", err);
-        } finally {
-            if (fileHandle !== undefined) {
-                // Close the file handle if it was opened
-                await fileHandle.close();
+            if (err.code === 'ENOENT') {
+                // Create the file if it doesn't exist
+                console.log("Creating guildId.json...");
+                await fs.writeFile(guildIdPath, '[]');
+            } else {
+                console.error("Error:", err);
+                return; // Stop execution if there's an error
             }
         }
+
+        fs.writeFile(guildIdPath, JSON.stringify(Guilds, null, 2), 'utf8');
 
         // Upload guilds to MongoDB
         uploadJson(guildIdPath, 'guildId');
