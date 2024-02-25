@@ -17,7 +17,7 @@
     "version": "1.2.0",
     "main": "index.js",
     "scripts": {
-        "start": "concurrently \"node index.js\" \"node updateDb.js\"",
+        "start": "node index.js",
         "data": "node mongoDb.js",
         "regcommand": "node deploy-commands.js",
         "bot": "node index.js",

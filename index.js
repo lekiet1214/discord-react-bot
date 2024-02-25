@@ -2,8 +2,10 @@ const { Collection, Client, GatewayIntentBits } = require('discord.js');
 const dotenv = require('dotenv');
 const fs = require('fs');
 const path = require('path');
-
+const { updateDb, uploadDb } = require('./updateDb');
 dotenv.config();
+
+await updateDb();
 
 const client = new Client({
 	intents: [
@@ -51,3 +53,11 @@ for (const file of eventFiles) {
 }
 
 client.login(process.env.DISCORD_TOKEN);
+
+setInterval(async () => {
+	await uploadDb();
+}, 1000 * 60 * 10); // 10 minutes
+
+setInterval(async () => {
+	await updateDb();
+}, 1000 * 60 * 10); // 10 minutes

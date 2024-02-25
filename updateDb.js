@@ -14,14 +14,3 @@ async function uploadDb() {
     uploadJson('data/voice.json', 'voice');
 
 }
-
-updateDb();
-
-setTimeout(() => {
-    // Code to execute after 5 seconds
-    console.log('"');
-}, 5000);
-
-
-setInterval(updateDb, 300000);
-setInterval(uploadDb, 300000);
