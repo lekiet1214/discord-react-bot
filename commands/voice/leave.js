@@ -13,6 +13,9 @@ module.exports = {
         const voiceConnection = getVoiceConnection(interaction.guild.id);
         if (voiceConnection) {
             voiceConnection.destroy();
+            if (interaction.client.audioPlayers.get(interaction.guild.id)) {
+                interaction.client.audioPlayers.delete(interaction.guild.id);
+            }
             return interaction.reply({ content: 'Left the voice channel', ephemeral: true });
         } else {
             return interaction.reply({ content: 'I am not in a voice channel', ephemeral: true });

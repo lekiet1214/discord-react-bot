@@ -2,7 +2,7 @@ const { ActivityType, Events } = require('discord.js');
 const fs = require('fs'); // Use fs.promises for promise-based file operations
 const path = require('path');
 const { uploadJson } = require('../mongoDb');
-const { joinVoiceChannel } = require('@discordjs/voice');
+const { joinVoiceChannel, VoiceConnectionStatus, entersState } = require('@discordjs/voice');
 
 module.exports = {
     name: Events.ClientReady,
@@ -35,15 +35,27 @@ module.exports = {
                 try {
                     // get the guild
                     vGuild = readyClient.guilds.cache.get(guild);
-                    voiceconnection = joinVoiceChannel({
+                    voiceConnection = joinVoiceChannel({
                         channelId: voiceData[guild],
                         guildId: guild,
                         adapterCreator: vGuild.voiceAdapterCreator
                     });
+                    voiceConnection.on(VoiceConnectionStatus.Disconnected, async (oldState, newState) => {
+                        try {
+                            await Promise.race([
+                                entersState(voiceConnection, VoiceConnectionStatus.Signalling, 5_000),
+                                entersState(voiceConnection, VoiceConnectionStatus.Connecting, 5_000),
+                            ]);
+                            // Seems to be reconnecting to the same channel
+                        }
+                        catch (error) {
+                            voiceConnection.destroy();
+                        }
+                    });
                 }
                 catch (error) {
                     console.error(error);
-                 }
+                }
             }
         }
     }

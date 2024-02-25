@@ -24,6 +24,10 @@ module.exports = {
                         delete voiceJson[oldState.guild.id];
                         fs.writeFileSync(path.resolve(__dirname, '../data/voice.json'), JSON.stringify(voiceJson, null, 2));
                         uploadJson(path.resolve(__dirname, '../data/voice.json'), 'voice');
+                        newState.client.audioPlayers.set(oldState.guild.id, null);
+                        if (newState.client.audioPlayers.get(oldState.guild.id)) {
+                            newState.client.audioPlayers.delete(oldState.guild.id);
+                        }
                     } catch (error) {
                         console.error(error);
                     }
