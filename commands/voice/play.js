@@ -67,25 +67,26 @@ module.exports = {
         const audioSubscription = voiceConnection.subscribe(audioPlayer);
         interaction.client.audioPlayers.set(interaction.guildId, audioPlayer);
         audioPlayer.on(AudioPlayerStatus.Playing, async () => {
-            interaction.editReply(`Playing ${songUrl}`);
+            await interaction.editReply(`Playing ${songUrl}`);
         });
         if ((songInfo.videoDetails.lengthSeconds) > 21500) {
             await interaction.followUp(`The song is ${songInfo.videoDetails.lengthSeconds} seconds long, which is too long for me to play! (Max 5 hours) The song will not play completely.`);
         }
-        audioPlayer.on('error', error => {
+        audioPlayer.on('error', async (error) => {
             try {
                 console.error(`Error: ${error}`);
                 audioPlayer.stop();
                 interaction.client.audioPlayers.delete(interaction.guildId);
+                await interaction.editReply('An error occurred while playing the song!');
             }
             catch (error) {
             }
         }
         );
-        audioPlayer.on(AudioPlayerStatus.Idle, () => {
+        audioPlayer.on(AudioPlayerStatus.Idle, async () => {
             audioPlayer.stop();
             interaction.client.audioPlayers.delete(interaction.guildId);
-            interaction.editReply('Music stopped!');
+            await interaction.editReply('Music stopped!');
             return;
         });
 
