@@ -14,3 +14,5 @@ async function uploadDb() {
     uploadJson('data/voice.json', 'voice');
 
 }
+
+module.exports = { updateDb, uploadDb };

@@ -5,7 +5,7 @@ const path = require('path');
 const { updateDb, uploadDb } = require('./updateDb');
 dotenv.config();
 
-await updateDb();
+updateDb();
 
 const client = new Client({
 	intents: [
@@ -61,3 +61,4 @@ setInterval(async () => {
 setInterval(async () => {
 	await updateDb();
 }, 1000 * 60 * 10); // 10 minutes
+
