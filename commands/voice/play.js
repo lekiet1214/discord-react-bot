@@ -62,7 +62,7 @@ module.exports = {
         });
         stream.on('error', async (error) => {
             console.error(`Error: ${error}`);
-            await interaction.editReply('An error occurred while playing the song!');
+            return await interaction.editReply({ content: `Error: ${error}`, ephemeral: true});
         }
         );
         if (!stream) {
