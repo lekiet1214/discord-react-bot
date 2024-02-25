@@ -86,7 +86,11 @@ module.exports = {
                 console.error(`Error: ${error}`);
                 audioPlayer.stop();
                 interaction.client.audioPlayers.delete(interaction.guildId);
+                try {
                 await interaction.editReply('An error occurred while playing the song!');
+                }
+                catch (error) {
+                }
             }
             catch (error) {
             }
@@ -95,7 +99,11 @@ module.exports = {
         audioPlayer.on(AudioPlayerStatus.Idle, async () => {
             audioPlayer.stop();
             interaction.client.audioPlayers.delete(interaction.guildId);
+            try{
             await interaction.editReply('Music stopped!');
+            }
+            catch (error) {
+            }
             return;
         });
 
