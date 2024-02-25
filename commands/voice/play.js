@@ -59,20 +59,24 @@ module.exports = {
             quality: 'highestaudio',
             highWaterMark: 1 << 25
         });
-        
+        const songInfo = await ytdl.getInfo(songUrl);
+        console.log(songInfo.videoDetails.lengthSeconds);
         const audioResource = createAudioResource(stream);
         const audioPlayer = createAudioPlayer();
         audioPlayer.play(audioResource);
         const audioSubscription = voiceConnection.subscribe(audioPlayer);
         interaction.client.audioPlayers.set(interaction.guildId, audioPlayer);
-        audioPlayer.on(AudioPlayerStatus.Playing, () => {
+        audioPlayer.on(AudioPlayerStatus.Playing, async () => {
             interaction.editReply(`Playing ${songUrl}`);
         });
+        if ((songInfo.videoDetails.lengthSeconds) > 21500) {
+            await interaction.followUp(`The song is ${songInfo.videoDetails.lengthSeconds} seconds long, which is too long for me to play! (Max 5 hours) The song will not play completely.`);
+        }
         audioPlayer.on('error', error => {
-            try{
-            console.error(`Error: ${error}`);
-            audioPlayer.stop();
-            interaction.client.audioPlayers.delete(interaction.guildId);
+            try {
+                console.error(`Error: ${error}`);
+                audioPlayer.stop();
+                interaction.client.audioPlayers.delete(interaction.guildId);
             }
             catch (error) {
             }
