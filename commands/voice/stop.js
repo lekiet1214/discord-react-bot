@@ -13,8 +13,6 @@ module.exports = {
                 audioPlayer.stop()
                 interaction.client.audioPlayers.delete(interaction.guildId);
                 const sent  = await interaction.reply({ content: 'Stopped playing music!', ephemeral: true , fetchReply: true});
-                await sent.delete({ timeout: 10 });
-                
             }
             else {
                 return await interaction.reply('I am not playing music in this server!');

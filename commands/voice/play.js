@@ -54,15 +54,18 @@ module.exports = {
         // const songPath = `${tempFolder}/${interaction.guildId}.opus`;
         // const audioResource = createAudioResource(createReadStream(songPath), { inputType: StreamType.Arbitrary });
 
-        try {
-            const stream = ytdl(songUrl, {
-                filter: 'audioonly',
-                quality: 'highestaudio',
-                highWaterMark: 1 << 25
-            });
-        }
-        catch (error) {
+
+        const stream = ytdl(songUrl, {
+            filter: 'audioonly',
+            quality: 'highestaudio',
+            highWaterMark: 1 << 25
+        });
+        stream.on('error', async (error) => {
             console.error(`Error: ${error}`);
+            await interaction.editReply('An error occurred while playing the song!');
+        }
+        );
+        if (!stream) {
             return await interaction.editReply('An error occurred while playing the song!');
         }
         const songInfo = await ytdl.getInfo(songUrl);
