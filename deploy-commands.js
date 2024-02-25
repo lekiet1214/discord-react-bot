@@ -68,6 +68,7 @@ globalCommands = [];
 function deployAll() {
 	(async () => {
 		for (const command of commands) {
+			console.log(command.name)
 			if (commandsJson[command.name][0] == "all") {
 				globalCommands.push(command);
 			} else {
