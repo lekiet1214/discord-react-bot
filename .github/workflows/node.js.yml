@@ -31,7 +31,6 @@ jobs:
         with:
           action: FedericoCarboni/setup-ffmpeg@v3
           with: |
-            id: setup-ffmpeg
             github-token: ${{ github.server_url == 'https://github.com' && github.token || '' }}
             architecture: x64
           attempt_limit: 3
