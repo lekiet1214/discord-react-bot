@@ -27,10 +27,15 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - uses: FedericoCarboni/setup-ffmpeg@v3
-        id: setup-ffmpeg
+      - uses: Wandalen/wretry.action@master
         with:
-          github-token: ${{ github.server_url == 'https://github.com' && github.token || '' }}
+          action: FedericoCarboni/setup-ffmpeg@v3
+          with: |
+            id: setup-ffmpeg
+            github-token: ${{ github.server_url == 'https://github.com' && github.token || '' }}
+            architecture: x64
+          attempt_limit: 3
+          attempt_delay: 5000
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
