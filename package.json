@@ -9,6 +9,7 @@
         "libsodium-wrappers": "^0.7.13",
         "mongodb": "^6.3.0",
         "mongoose": "^8.1.3",
+        "prism-media": "^1.3.5",
         "progress-estimator": "^0.3.1",
         "youtube-dl-exec": "^2.5.7",
         "ytdl-core": "^4.11.5"
@@ -23,7 +24,8 @@
         "bot": "node index.js",
         "delcommand": "node delete-commands.js",
         "ver": "npx auto-version ",
-        "preparedata": "node mongoDb.js update"
+        "preparedata": "node mongoDb.js update",
+        "lint": "eslint . --fix"
     },
     "keywords": [],
     "author": "",

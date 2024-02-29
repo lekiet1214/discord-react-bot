@@ -15,7 +15,7 @@ const client = new Client({
 		GatewayIntentBits.GuildVoiceStates,
 		GatewayIntentBits.DirectMessages,
 		GatewayIntentBits.GuildEmojisAndStickers,
-		GatewayIntentBits.MessageContent
+		GatewayIntentBits.MessageContent,
 	],
 });
 
@@ -34,7 +34,8 @@ for (const folder of commandFolders) {
 		// Set a new item in the Collection with the key as the command name and the value as the exported module
 		if ('data' in command && 'execute' in command) {
 			client.commands.set(command.data.name, command);
-		} else {
+		}
+		else {
 			console.debug(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
 		}
 	}
@@ -48,7 +49,8 @@ for (const file of eventFiles) {
 	const event = require(filePath);
 	if (event.once) {
 		client.once(event.name, (...args) => event.execute(...args));
-	} else {
+	}
+	else {
 		client.on(event.name, (...args) => event.execute(...args));
 	}
 }
@@ -57,9 +59,9 @@ client.login(process.env.DISCORD_TOKEN);
 
 setInterval(async () => {
 	await uploadDb();
-}, 1000 * 60 * 10); // 10 minutes
+}, 1000 * 60 * 10);
 
 setInterval(async () => {
 	await updateDb();
-}, 1000 * 60 * 10); // 10 minutes
+}, 1000 * 60 * 10);
 

@@ -2,23 +2,23 @@ const { REST, Routes } = require('discord.js');
 const fs = require('node:fs');
 const path = require('node:path');
 const dotenv = require('dotenv');
-const { set } = require('mongoose');
 dotenv.config();
 
 // Construct and prepare an instance of the REST module
 const rest = new REST().setToken(process.env.DISCORD_TOKEN);
 
 async function registerGuildCommands(command, guildId) {
-	commandToSend = [];
+	const commandToSend = [];
 	commandToSend.push(command);
 	try {
 		console.log(`Started refreshing command: ${command.name}`);
-		const data = await rest.put(
+		await rest.put(
 			Routes.applicationGuildCommands(process.env.CLIENT_ID, guildId),
 			{ body: commandToSend },
 		);
 		console.log(`Successfully refreshed command: ${command.name}`);
-	} catch (error) {
+	}
+	catch (error) {
 		console.error(error);
 	}
 }
@@ -31,7 +31,8 @@ async function registerGlobalCommands(command) {
 			{ body: command },
 		);
 		console.log(`Successfully reloaded ${data.length} application (/) commands.`);
-	} catch (error) {
+	}
+	catch (error) {
 		console.error(error);
 	}
 }
@@ -56,22 +57,24 @@ for (const folder of commandFolders) {
 		const command = require(filePath);
 		if ('data' in command && 'execute' in command) {
 			commands.push(command.data.toJSON());
-		} else {
+		}
+		else {
 			console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
 		}
 	}
 }
 
-globalCommands = [];
+const globalCommands = [];
 
 
 function deployAll() {
 	(async () => {
 		for (const command of commands) {
-			console.log(command.name)
-			if (commandsJson[command.name][0] == "all") {
+			console.log(command.name);
+			if (commandsJson[command.name][0] == 'all') {
 				globalCommands.push(command);
-			} else {
+			}
+			else {
 				for (const guildId of commandsJson[command.name]) {
 					console.log(`Registering guild command: ${command.name} for guild: ${guildId}`);
 					await registerGuildCommands(command, guildId);
@@ -85,9 +88,10 @@ function deployAll() {
 
 function deploy(commandToDeploy) {
 	(async () => {
-		if (commandsJson[commandToDeploy][0] == "all") {
+		if (commandsJson[commandToDeploy][0] == 'all') {
 			await registerGlobalCommands(commandToDeploy);
-		} else {
+		}
+		else {
 			// get command from commands array
 			const command = commands.find(cmd => cmd.name === commandToDeploy);
 			if (command) {
@@ -95,7 +99,8 @@ function deploy(commandToDeploy) {
 					console.log(`Registering guild command: ${command.name} for guild: ${guildId}`);
 					await registerGuildCommands(command, guildId);
 				}
-			} else {
+			}
+			else {
 				console.log(`Command ${commandToDeploy} not found`);
 			}
 		}
@@ -105,6 +110,7 @@ function deploy(commandToDeploy) {
 const args = process.argv.slice(2);
 if (args.length == 0) {
 	deployAll();
-} else {
+}
+else {
 	deploy(args[0]);
 }

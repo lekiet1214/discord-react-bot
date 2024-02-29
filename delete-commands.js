@@ -11,11 +11,9 @@ const guildIdPath = path.join(__dirname, '/data/guildId.json');
 const guildIdData = fs.readFileSync(guildIdPath, 'utf8');
 const guildIds = JSON.parse(guildIdData);
 for (const guildId of guildIds) {
-    rest.put(Routes.applicationGuildCommands(process.env.CLIENT_ID, guildId), { body: [] })
-        .then(() => console.log(`Successfully deleted all guild commands for guild ID: ${guildId}`))
-        .catch(console.error);
-    // wait 1 second before deleting the next guild's commands
-    setTimeout(() => { }, 1000);
+	rest.put(Routes.applicationGuildCommands(process.env.CLIENT_ID, guildId), { body: [] })
+		.then(() => console.log(`Successfully deleted all guild commands for guild ID: ${guildId}`))
+		.catch(console.error);
 }
 
 // for global commands
