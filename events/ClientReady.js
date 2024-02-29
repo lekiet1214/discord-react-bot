@@ -38,7 +38,9 @@ module.exports = {
                     voiceConnection = joinVoiceChannel({
                         channelId: voiceData[guild],
                         guildId: guild,
-                        adapterCreator: vGuild.voiceAdapterCreator
+                        adapterCreator: vGuild.voiceAdapterCreator,
+                        selfDeaf: false,
+                        selfMute: false
                     });
                     voiceConnection.on(VoiceConnectionStatus.Disconnected, async (oldState, newState) => {
                         try {

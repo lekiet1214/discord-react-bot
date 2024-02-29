@@ -17,7 +17,9 @@ module.exports = {
             const voiceConnection = joinVoiceChannel({
                 channelId: channelId,
                 guildId: interaction.guild.id,
-                adapterCreator: interaction.guild.voiceAdapterCreator
+                adapterCreator: interaction.guild.voiceAdapterCreator,
+                selfDeaf: false,
+                selfMute: false
             });
             voiceConnection.on(VoiceConnectionStatus.Disconnected, async (oldState, newState) => {
                 try {

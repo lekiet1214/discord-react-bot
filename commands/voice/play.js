@@ -34,7 +34,9 @@ module.exports = {
             voiceConnection = joinVoiceChannel({
                 channelId: voiceChannel.id,
                 guildId: interaction.guildId,
-                adapterCreator: interaction.guild.voiceAdapterCreator
+                adapterCreator: interaction.guild.voiceAdapterCreator,
+                selfDeaf: false,
+                selfMute: false
             });
         }
 
