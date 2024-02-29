@@ -134,3 +134,4 @@ dotenv
 
 # runtime data
 data/
+*.pcm
