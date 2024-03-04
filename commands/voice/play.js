@@ -71,7 +71,14 @@ module.exports = {
 		if (!stream) {
 			return await interaction.editReply('An error occurred while playing the song!');
 		}
-		const songInfo = await ytdl.getInfo(songUrl);
+		let songInfo;
+		try {
+			songInfo = await ytdl.getInfo(songUrl);
+		}
+		catch (error) {
+			console.error(`Error: ${error}`);
+			return await interaction.editReply({ content: `Error: ${error}`, ephemeral: true });
+		}
 		console.log(songInfo.videoDetails.lengthSeconds);
 		const audioResource = createAudioResource(stream);
 		const audioPlayer = createAudioPlayer();
