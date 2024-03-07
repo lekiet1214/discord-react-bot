@@ -33,8 +33,8 @@ jobs:
           with: |
             github-token: ${{ github.server_url == 'https://github.com' && github.token || '' }}
             architecture: x64
-          attempt_limit: 3
-          attempt_delay: 5000
+          attempt_limit: 10
+          attempt_delay: 10000
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
@@ -52,4 +52,4 @@ jobs:
           CLIENT_ID: ${{ secrets.CLIENT_ID }}
           DEBUG: "False"
           OWNER_ID: ${{ secrets.OWNER_ID }}
-        run: timeout 21500 npm run start || code=$?; if [[ $code -ne 124 && $code -ne 0 ]]; then exit $code; fi
+        run: timeout 21400 npm run start || code=$?; if [[ $code -ne 124 && $code -ne 0 ]]; then exit $code; fi
